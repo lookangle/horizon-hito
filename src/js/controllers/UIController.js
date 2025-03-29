@@ -78,7 +78,7 @@ export class UIController {
    * Update time display
    */
   updateTimeDisplay() {
-    this.timeDisplay.textContent = formatTime(this.currentHour, this.currentMinute);
+    this.timeDisplay.textContent = 'Time: ' + formatTime(this.currentHour, this.currentMinute);
   }
   
   /**
