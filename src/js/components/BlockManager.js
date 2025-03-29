@@ -45,7 +45,7 @@ export class BlockManager {
       color: skyColor,
       type: blockType,
       height: randomHeight,         // Target height to grow to
-      currentHeight: 2,             // Start with more visible height (2% instead of 0.05%)
+      currentHeight: 0.05,          // Start with almost invisible height (0.05% instead of 2%)
       timestamp: Date.now(),
       heightFactor: getRandomRange(MIN_HEIGHT_FACTOR, MAX_HEIGHT_FACTOR),
       growthProgress: 0             // Track growth from 0 to 1

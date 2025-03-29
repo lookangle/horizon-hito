@@ -11,11 +11,11 @@ export const VERTICAL_GRADIENT_CHANCE = 0.5; // 50% chance of gradient being ver
 /**
  * Constants for block animation
  */
-export const GROWTH_DURATION = 30000; // 30 seconds to reach full height (faster growth)
+export const GROWTH_DURATION = 60000; // 60 seconds to reach full height (much slower growth)
 export const HEIGHT_UPDATE_INTERVAL = 100; // Update heights more frequently (every 100ms)
 
 /**
  * Constants for block blur effects
  */
-export const BLUR_BASE = 0.5; // Base blur in pixels
-export const BLUR_VARIATION = 1; // Variation amount for different blocks 
+export const BLUR_BASE = 0.1; // Base blur in pixels
+export const BLUR_VARIATION = 0.5; // Variation amount for different blocks 

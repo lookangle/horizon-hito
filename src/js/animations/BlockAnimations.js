@@ -14,12 +14,18 @@ export function updateBlockHeights(blocks) {
     const elapsedTime = Date.now() - newestBlock.timestamp;
     newestBlock.growthProgress = Math.min(elapsedTime / GROWTH_DURATION, 1);
     
-    // Modified easing function - faster initial growth, then slower
-    // Use a modified power function that grows faster at the beginning
-    const easing = Math.pow(newestBlock.growthProgress, 0.5); 
+    // Modified easing function - much slower initial growth
+    // Use a cubic function to create a slow start
+    const easing = Math.pow(newestBlock.growthProgress, 0.3);
     
-    // Start from a more visible height (2% instead of 0.05%)
-    newestBlock.currentHeight = 2 + (newestBlock.height * newestBlock.heightFactor * easing);
+    if (blocks.length === 1) {
+      // When there's only one block, make it take up the full viewport height
+      // Start from a tiny height of 0.05% for near invisibility
+      newestBlock.currentHeight = 0.05 + (totalHeight - 0.05) * easing;
+    } else {
+      // Start from an almost invisible height (0.05% instead of 2%)
+      newestBlock.currentHeight = 0.05 + (newestBlock.height * newestBlock.heightFactor * easing);
+    }
   }
   
   // First pass: calculate remaining height after accounting for newest block
@@ -49,7 +55,7 @@ export function updateBlockHeights(blocks) {
       // Existing blocks distribute the remaining space
       // Ensure a minimum height for visibility
       const baseHeight = block.height * block.heightFactor * scaleFactor;
-      targetHeight = Math.max(baseHeight, 3); // Minimum height of 3%
+      targetHeight = Math.max(baseHeight, 0.5); // Reduced minimum height to 0.5%
       
       // Add extremely subtle breathing animation to older blocks
       const elapsedTime = Date.now() - block.timestamp;
