@@ -44,26 +44,3 @@ button {
   transform: translateY(-10px);
   pointer-events: none;
 }
-
-/* Keyboard shortcut indicator */
-.key-indicator {
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  background-color: rgba(0, 0, 0, 0.65);
-  color: rgba(255, 255, 255, 0.6);
-  padding: 5px 8px;
-  border-radius: 4px;
-  font-family: inherit;
-  backdrop-filter: blur(8px);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.key-indicator.visible {
-  opacity: 1;
-}
-
-.key-indicator.fade {
-  opacity: 0;
-} 

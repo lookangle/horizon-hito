@@ -42,37 +42,10 @@ export class UIController {
     document.addEventListener('keydown', (e) => {
       if (e.key.toLowerCase() === 'h') {
         this.handleToggleInterface();
-        this.showKeyIndicator();
       }
     });
   }
   
-  /**
-   * Show the key indicator briefly then fade
-   */
-  showKeyIndicator() {
-    // Clear any existing timeout
-    if (this.keyIndicatorTimeout) {
-      clearTimeout(this.keyIndicatorTimeout);
-    }
-    
-    // Update key indicator text based on current state
-    this.keyIndicator.textContent = this.showInterface ? 'UI Hidden (Press H to show)' : 'UI Shown (Press H to hide)';
-    
-    // Show the indicator
-    this.keyIndicator.classList.add('visible');
-    this.keyIndicator.classList.remove('fade');
-    
-    // Set timeout to fade it after 2 seconds
-    this.keyIndicatorTimeout = setTimeout(() => {
-      this.keyIndicator.classList.add('fade');
-      
-      // Remove the visible class after fade completes
-      setTimeout(() => {
-        this.keyIndicator.classList.remove('visible');
-      }, 300);
-    }, 2000);
-  }
   
   /**
    * Update time display
