@@ -11,7 +11,7 @@ export function getRandomRange(min, max) {
  * Get the sky color based on hour
  */
 export function getSkyColor(hour) {
-  // Determine if this block should be a gradient (25% chance)
+  // Determine if this block should be a gradient (50% chance)
   const useGradient = Math.random() < GRADIENT_CHANCE;
   // Determine if gradient should be vertical (50% chance) or horizontal
   const isVertical = Math.random() < VERTICAL_GRADIENT_CHANCE;
@@ -48,7 +48,7 @@ export function getSkyColor(hour) {
     const progress = hour - 5; // 0 to 2
     // Keep in yellow-orange range (50-30), avoiding green (>60)
     const baseHue = 50 - (progress * 10); 
-    const saturation = 85 - (progress * 5) + saturationBoost;
+    const saturation = 50 - (progress * 5) + saturationBoost;
     const lightness = 60 + (progress * 10);
     
     if (useGradient) {
@@ -72,7 +72,7 @@ export function getSkyColor(hour) {
     const progress = hour - 7; // 0 to 5
     // Transition from light blue to azure blue (200-220)
     const baseHue = 220 - (progress * 4); 
-    const saturation = 70 - (progress * 5) + saturationBoost;
+    const saturation = 50 - (progress * 5) + saturationBoost;
     const lightness = 70 + (progress * 2);
     
     if (useGradient) {
@@ -96,7 +96,7 @@ export function getSkyColor(hour) {
     const progress = hour - 12; // 0 to 5
     // Midday to afternoon - stay in blue range (200-225)
     const baseHue = 200 + (progress * 5); 
-    const saturation = 55 - (progress * 3) + saturationBoost;
+    const saturation = 25 - (progress * 3) + saturationBoost;
     const lightness = 80 - (progress * 3);
     
     if (useGradient) {
@@ -122,7 +122,7 @@ export function getSkyColor(hour) {
     const baseHue = progress < 1.5 ? 
                     15 - (progress * 8) : // Start with orange-red (15) toward red
                     340 - ((progress - 1.5) * 15); // More pink hues (340-325)
-    const saturation = 90 - (progress * 8) + saturationBoost;
+    const saturation = 75 - (progress * 8) + saturationBoost;
     const lightness = 55 - (progress * 10);
     
     if (useGradient) {
@@ -141,7 +141,7 @@ export function getSkyColor(hour) {
       };
     }
   }
-  // Night (8PM to midnight) - Aurora Borealis inspired
+  // Night (8PM to midnight)
   else {
     // Choose one of several aurora colors
     const auroraColors = [
