@@ -36,7 +36,7 @@ export function updateBlockHeights(blocks) {
   let totalNeededHeight = 0;
   for (let i = 1; i < blocks.length; i++) {
     totalNeededHeight += blocks[i].height * blocks[i].heightFactor;
-  }
+  }hhhh
   
   // Ensure we have a reasonable scale factor to prevent blocks from becoming too small
   // Set a minimum scale factor to ensure blocks remain visible
@@ -55,7 +55,7 @@ export function updateBlockHeights(blocks) {
       // Existing blocks distribute the remaining space
       // Ensure a minimum height for visibility
       const baseHeight = block.height * block.heightFactor * scaleFactor;
-      targetHeight = Math.max(baseHeight, 0.5); // Reduced minimum height to 0.5%
+      targetHeight = Math.max(baseHeight, 0.1); // Reduced minimum height to 0.5%
       
       // Add extremely subtle breathing animation to older blocks
       const elapsedTime = Date.now() - block.timestamp;

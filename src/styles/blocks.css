@@ -32,10 +32,12 @@
   /* Add subtle blur effect */
   filter: blur(0.5px);
   transition: filter 1.5s ease-out;
+  overflow: hidden; /* Ensure motion doesn't create horizontal scrollbars */
 }
 
 .split-left, .split-right {
   height: 100%;
+  transition: width 3s ease-in-out; /* Smooth transition between width changes */
 }
 
 /* Enhanced animation for continuous motion - much more subtle */

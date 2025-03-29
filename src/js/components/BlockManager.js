@@ -30,8 +30,8 @@ export class BlockManager {
     // Sometimes create very tall or very short blocks for variety
     if (Math.random() < 0.2) {
       // 20% chance of dramatic height (very tall or very short)
-      randomHeight = baseHeight * (Math.random() < 0.5 ? 
-                      getRandomRange(0.4, 0.7) :   // Extra short
+      randomHeight = baseHeight * (Math.random() < 0.1 ? 
+                      getRandomRange(0.2, 0.7) :   // Extra short
                       getRandomRange(1.5, 2.2));   // Extra tall
     } else {
       // 80% chance of more moderate variation
@@ -137,5 +137,31 @@ export class BlockManager {
    */
   getBlocks() {
     return this.blocks;
+  }
+
+  /**
+   * Remove a block from the visualization
+   */
+  removeBlock(id) {
+    // Find the block element
+    const blockElement = document.getElementById(`block-${id}`);
+    if (blockElement) {
+      // Clean up any animation intervals or timeouts
+      const splitBlock = blockElement.querySelector('.split-block');
+      if (splitBlock) {
+        if (splitBlock.dataset.animationInterval) {
+          clearInterval(parseInt(splitBlock.dataset.animationInterval));
+        }
+        if (splitBlock.dataset.animationTimeout) {
+          clearTimeout(parseInt(splitBlock.dataset.animationTimeout));
+        }
+      }
+      
+      // Remove the element
+      blockElement.remove();
+    }
+    
+    // Remove from blocks array
+    this.blocks = this.blocks.filter(block => block.id !== id);
   }
 } 

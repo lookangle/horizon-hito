@@ -5,7 +5,14 @@ import {
   MIN_HEIGHT_FACTOR,
   MAX_HEIGHT_FACTOR,
   BLUR_BASE,
-  BLUR_VARIATION
+  BLUR_VARIATION,
+  SPLIT_MOTION_ENABLED,
+  SPLIT_MOTION_DURATION_MIN,
+  SPLIT_MOTION_DURATION_MAX,
+  SPLIT_MOTION_MIN_POSITION,
+  SPLIT_MOTION_MAX_POSITION,
+  SPLIT_MOTION_UPDATE_MIN,
+  SPLIT_MOTION_UPDATE_MAX
 } from '../constants/blockConstants.js';
 
 /**
@@ -82,6 +89,89 @@ export function createBlockElement(block) {
     const rightElement = document.createElement('div');
     rightElement.className = 'split-right';
     rightElement.style.width = `${100 - block.type.splitPosition}%`;
+    
+    // Apply dynamic width animation if enabled
+    if (SPLIT_MOTION_ENABLED) {
+      // Initialize with base split position
+      let currentPosition = block.type.splitPosition;
+      let targetPosition = currentPosition;
+      let transitionInProgress = false;
+      
+      // Set transition duration based on distance to travel
+      const setTransitionDuration = (start, end) => {
+        const distance = Math.abs(end - start);
+        const baseDuration = getRandomRange(SPLIT_MOTION_DURATION_MIN, SPLIT_MOTION_DURATION_MAX);
+        // Scale duration by distance - longer distances take proportionally longer
+        const scaledDuration = baseDuration * (distance / 50);
+        
+        leftElement.style.transition = `width ${scaledDuration}s ease-in-out`;
+        rightElement.style.transition = `width ${scaledDuration}s ease-in-out`;
+        
+        return scaledDuration * 1000; // Return in milliseconds
+      };
+      
+      // Choose a new random target position that's meaningfully different from current
+      const chooseNewPosition = (current) => {
+        // Define how far we need to move to consider it meaningful
+        const minChange = 15; 
+        
+        // Generate possible new position
+        let newPos;
+        
+        // 2/3 chance to pick completely random position across entire range
+        if (Math.random() < 0.67) {
+          newPos = getRandomRange(SPLIT_MOTION_MIN_POSITION, SPLIT_MOTION_MAX_POSITION);
+        } else {
+          // 1/3 chance to pick a position near one of the extremes
+          newPos = Math.random() < 0.5 ? 
+            getRandomRange(SPLIT_MOTION_MIN_POSITION, SPLIT_MOTION_MIN_POSITION + 15) : 
+            getRandomRange(SPLIT_MOTION_MAX_POSITION - 15, SPLIT_MOTION_MAX_POSITION);
+        }
+        
+        // If it's too close to current position, adjust it further away
+        if (Math.abs(newPos - current) < minChange) {
+          newPos = current + (current < 50 ? minChange : -minChange);
+          // Ensure it's within bounds
+          newPos = Math.max(SPLIT_MOTION_MIN_POSITION, 
+                   Math.min(SPLIT_MOTION_MAX_POSITION, newPos));
+        }
+        
+        return newPos;
+      };
+      
+      // Animation function to smoothly change split position
+      const animateSplitPosition = () => {
+        if (transitionInProgress) return;
+        
+        // Choose new target position
+        targetPosition = chooseNewPosition(currentPosition);
+        
+        // Calculate transition duration based on distance
+        const transitionDuration = setTransitionDuration(currentPosition, targetPosition);
+        
+        // Start transition
+        transitionInProgress = true;
+        leftElement.style.width = `${targetPosition}%`;
+        rightElement.style.width = `${100 - targetPosition}%`;
+        
+        // Update current position after transition finishes
+        setTimeout(() => {
+          currentPosition = targetPosition;
+          transitionInProgress = false;
+        }, transitionDuration);
+        
+        // Schedule next update with variable timing
+        setTimeout(animateSplitPosition, 
+          transitionDuration + getRandomRange(SPLIT_MOTION_UPDATE_MIN, SPLIT_MOTION_UPDATE_MAX));
+      };
+      
+      // Initial random delay before starting animation
+      const initialDelay = getRandomRange(1000, 7000);
+      const timeoutId = setTimeout(animateSplitPosition, initialDelay);
+      
+      // Store timeout ID on the element for cleanup
+      blockElement.dataset.animationTimeout = timeoutId;
+    }
     
     if (block.color.type === 'solid') {
       // Use slight variations of the same color for split blocks

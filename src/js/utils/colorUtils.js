@@ -27,8 +27,8 @@ export function getSkyColor(hour) {
       return {
         type: 'gradient',
         colors: [
-          `hsl(${baseHue - 10}, ${saturation}%, ${lightness - 2}%)`,
-          `hsl(${baseHue + 10}, ${saturation - 5}%, ${lightness + 3}%)`
+          `hsl(${baseHue - 10}, ${saturation + 15}%, ${lightness - 2}%)`,
+          `hsl(${baseHue + 10}, ${saturation - 15}%, ${lightness + 3}%)`
         ],
         direction: gradientDirection
       };
@@ -51,8 +51,8 @@ export function getSkyColor(hour) {
       return {
         type: 'gradient',
         colors: [
-          `hsl(${baseHue - 5}, ${saturation + 5}%, ${lightness - 5}%)`, // Slightly darker, warmer
-          `hsl(${baseHue + 10}, ${saturation - 5}%, ${lightness + 10}%)` // Yellower but staying below 60
+          `hsl(${baseHue - 5}, ${saturation + 15}%, ${lightness - 5}%)`, // Darker, more saturated
+          `hsl(${baseHue + 10}, ${saturation - 15}%, ${lightness + 10}%)` // Yellower but staying below 60
         ],
         direction: gradientDirection
       };
@@ -75,8 +75,8 @@ export function getSkyColor(hour) {
       return {
         type: 'gradient',
         colors: [
-          `hsl(${baseHue - 5}, ${saturation + 5}%, ${lightness - 5}%)`,
-          `hsl(${baseHue + 5}, ${saturation - 5}%, ${lightness + 5}%)`
+          `hsl(${baseHue - 5}, ${saturation + 20}%, ${lightness - 5}%)`,
+          `hsl(${baseHue + 5}, ${saturation - 15}%, ${lightness + 5}%)`
         ],
         direction: gradientDirection
       };
@@ -99,8 +99,8 @@ export function getSkyColor(hour) {
       return {
         type: 'gradient',
         colors: [
-          `hsl(${baseHue - 5}, ${saturation + 5}%, ${lightness - 3}%)`,
-          `hsl(${baseHue + 5}, ${saturation - 5}%, ${lightness + 3}%)`
+          `hsl(${baseHue - 5}, ${saturation + 25}%, ${lightness - 3}%)`,
+          `hsl(${baseHue + 5}, ${saturation - 15}%, ${lightness + 3}%)`
         ],
         direction: gradientDirection
       };
@@ -124,8 +124,8 @@ export function getSkyColor(hour) {
       return {
         type: 'gradient',
         colors: [
-          `hsl(${baseHue - 10}, ${saturation + 10}%, ${lightness - 5}%)`, // Darker, more saturated
-          `hsl(${baseHue + 15}, ${saturation - 5}%, ${lightness + 10}%)` // Add pink/purple tint, lighter
+          `hsl(${baseHue - 10}, ${saturation + 15}%, ${lightness - 5}%)`, // Darker, more saturated
+          `hsl(${baseHue + 15}, ${saturation - 20}%, ${lightness + 10}%)` // Add pink/purple tint, lighter
         ],
         direction: gradientDirection
       };
@@ -146,8 +146,8 @@ export function getSkyColor(hour) {
       return {
         type: 'gradient',
         colors: [
-          `hsl(${baseHue - 10}, ${saturation + 5}%, ${lightness - 2}%)`,
-          `hsl(${baseHue + 10}, ${saturation - 5}%, ${lightness + 2}%)`
+          `hsl(${baseHue - 10}, ${saturation + 20}%, ${lightness - 2}%)`,
+          `hsl(${baseHue + 10}, ${saturation - 15}%, ${lightness + 2}%)`
         ],
         direction: gradientDirection
       };
