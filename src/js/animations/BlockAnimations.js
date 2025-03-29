@@ -14,10 +14,12 @@ export function updateBlockHeights(blocks) {
     const elapsedTime = Date.now() - newestBlock.timestamp;
     newestBlock.growthProgress = Math.min(elapsedTime / GROWTH_DURATION, 1);
     
-    // Exponential ease-out growth for smoother, more natural expansion
-    // Make it even more gradual with cube root for ultra slow initial growth
-    const easing = Math.pow(newestBlock.growthProgress, 1/3); 
-    newestBlock.currentHeight = 0.05 + (newestBlock.height * newestBlock.heightFactor * easing);
+    // Modified easing function - faster initial growth, then slower
+    // Use a modified power function that grows faster at the beginning
+    const easing = Math.pow(newestBlock.growthProgress, 0.5); 
+    
+    // Start from a more visible height (2% instead of 0.05%)
+    newestBlock.currentHeight = 2 + (newestBlock.height * newestBlock.heightFactor * easing);
   }
   
   // First pass: calculate remaining height after accounting for newest block
@@ -30,8 +32,11 @@ export function updateBlockHeights(blocks) {
     totalNeededHeight += blocks[i].height * blocks[i].heightFactor;
   }
   
-  // Adjust heights proportionally
-  const scaleFactor = totalNeededHeight > 0 ? remainingHeight / totalNeededHeight : 0;
+  // Ensure we have a reasonable scale factor to prevent blocks from becoming too small
+  // Set a minimum scale factor to ensure blocks remain visible
+  const minScaleFactor = 0.2;
+  let scaleFactor = totalNeededHeight > 0 ? remainingHeight / totalNeededHeight : 0;
+  scaleFactor = Math.max(scaleFactor, minScaleFactor);
   
   // Return heights for all blocks
   return blocks.map((block, i) => {
@@ -42,18 +47,20 @@ export function updateBlockHeights(blocks) {
       targetHeight = block.currentHeight;
     } else {
       // Existing blocks distribute the remaining space
-      targetHeight = block.height * block.heightFactor * scaleFactor;
+      // Ensure a minimum height for visibility
+      const baseHeight = block.height * block.heightFactor * scaleFactor;
+      targetHeight = Math.max(baseHeight, 3); // Minimum height of 3%
       
       // Add extremely subtle breathing animation to older blocks
       const elapsedTime = Date.now() - block.timestamp;
       
       // Enhanced breathing animation with more variation and speed
       // Each block gets a unique breathing cycle based on its ID
-      const uniqueSpeed = 3000 + (block.id.charCodeAt(0) % 5) * 500; // Speeds between 3000-5500ms
-      const uniqueIntensity = 0.01 + (block.id.charCodeAt(1) % 10) * 0.002; // Intensity between 1-3%
+      const uniqueSpeed = 3000 + (block.id % 5) * 500; // Speeds between 3000-5500ms
+      const uniqueIntensity = 0.01 + (block.id % 10) * 0.002; // Intensity between 1-3%
       
       // Add a slight phase shift for each block to prevent synchronized movement
-      const phaseShift = (block.id.charCodeAt(2) % 100) * 0.0628; // Random phase (0 to 2π)
+      const phaseShift = (block.id % 100) * 0.0628; // Random phase (0 to 2π)
       const breatheFactor = 1 + uniqueIntensity * Math.sin((elapsedTime / uniqueSpeed) + phaseShift);
       
       targetHeight *= breatheFactor;

@@ -45,7 +45,7 @@ export class BlockManager {
       color: skyColor,
       type: blockType,
       height: randomHeight,         // Target height to grow to
-      currentHeight: 0.05,          // Start extremely small (0.05%)
+      currentHeight: 2,             // Start with more visible height (2% instead of 0.05%)
       timestamp: Date.now(),
       heightFactor: getRandomRange(MIN_HEIGHT_FACTOR, MAX_HEIGHT_FACTOR),
       growthProgress: 0             // Track growth from 0 to 1
@@ -61,7 +61,7 @@ export class BlockManager {
     
     // Create and add the DOM element with tiny initial height
     const blockElement = createBlockElement(newBlock);
-    blockElement.style.height = `${newBlock.currentHeight}%`; // Start super small
+    blockElement.style.height = `${newBlock.currentHeight}%`; // Set initial height
     blockElement.style.zIndex = this.blocks.length; // Ensure proper stacking order
     
     if (this.blocksContainer.firstChild) {

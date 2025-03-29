@@ -43,6 +43,9 @@ export function createBlockElement(block) {
   if (block.currentHeight === undefined) {
     const randomHeightFactor = getRandomRange(MIN_HEIGHT_FACTOR, MAX_HEIGHT_FACTOR);
     wrapper.style.height = `${block.height * randomHeightFactor}%`;
+  } else {
+    // Ensure the block has a visible initial height
+    wrapper.style.height = `${Math.max(block.currentHeight, 2)}%`;
   }
   
   // Set random animation delay for continuous motion effect
