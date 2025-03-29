@@ -1,7 +1,4 @@
-// Import styles
-import './styles/main.css?url';
-import './styles/blocks.css?url';
-import './styles/interface.css?url';
+// Import styles (removed - will be added to index.html)
 
 // Import app
 import { HorizonTimelapse } from './js/App.js';
