@@ -1,7 +1,7 @@
 // Import styles
-import './styles/main.css';
-import './styles/blocks.css';
-import './styles/interface.css';
+import './styles/main.css?url';
+import './styles/blocks.css?url';
+import './styles/interface.css?url';
 
 // Import app
 import { HorizonTimelapse } from './js/App.js';
