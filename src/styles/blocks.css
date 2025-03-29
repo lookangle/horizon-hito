@@ -1,0 +1,65 @@
+.blocks-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.block-wrapper {
+  width: 100%;
+  transition: height 1.5s ease-out, filter 1.5s ease-out; /* Add filter transition */
+  position: relative;
+  min-height: 0.05vh; /* Allow extremely small heights */
+  transform: scaleY(1.05); /* Increased scale up to prevent gaps */
+  transform-origin: top; /* Scale from the top */
+  margin-top: -2px; /* Increased overlap with the block above */
+  z-index: 1; /* Establish stacking context */
+}
+
+.block {
+  width: 100%;
+  height: 100%;
+  min-height: 1px;
+  /* Add subtle blur effect */
+  filter: blur(0.5px);
+  transition: filter 1.5s ease-out;
+}
+
+.split-block {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  /* Add subtle blur effect */
+  filter: blur(0.5px);
+  transition: filter 1.5s ease-out;
+}
+
+.split-left, .split-right {
+  height: 100%;
+}
+
+/* Enhanced animation for continuous motion - much more subtle */
+@keyframes block-breathe {
+  0% { transform: scaleY(1.05); }
+  25% { transform: scaleY(1.055); }
+  50% { transform: scaleY(1.05); }
+  75% { transform: scaleY(1.045); }
+  100% { transform: scaleY(1.05); }
+}
+
+.block-wrapper {
+  animation: block-breathe
+  20s infinite ease-in-out; /* Slower animation */
+  animation-delay: var(--delay, 0s);
+}
+
+/* Add subtle blur variation based on block position */
+.block-wrapper:nth-child(even) .block,
+.block-wrapper:nth-child(even) .split-block {
+  filter: blur(0.6px);
+}
+
+.block-wrapper:nth-child(3n) .block,
+.block-wrapper:nth-child(3n) .split-block {
+  filter: blur(0.7px);
+} 
