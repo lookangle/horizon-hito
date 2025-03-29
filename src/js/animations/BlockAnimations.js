@@ -46,8 +46,16 @@ export function updateBlockHeights(blocks) {
       
       // Add extremely subtle breathing animation to older blocks
       const elapsedTime = Date.now() - block.timestamp;
-      // Reduce breathing intensity significantly
-      const breatheFactor = 1 + 0.005 * Math.sin(elapsedTime / 15000);
+      
+      // Enhanced breathing animation with more variation and speed
+      // Each block gets a unique breathing cycle based on its ID
+      const uniqueSpeed = 3000 + (block.id.charCodeAt(0) % 5) * 500; // Speeds between 3000-5500ms
+      const uniqueIntensity = 0.01 + (block.id.charCodeAt(1) % 10) * 0.002; // Intensity between 1-3%
+      
+      // Add a slight phase shift for each block to prevent synchronized movement
+      const phaseShift = (block.id.charCodeAt(2) % 100) * 0.0628; // Random phase (0 to 2π)
+      const breatheFactor = 1 + uniqueIntensity * Math.sin((elapsedTime / uniqueSpeed) + phaseShift);
+      
       targetHeight *= breatheFactor;
     }
     

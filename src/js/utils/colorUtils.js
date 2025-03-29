@@ -41,16 +41,18 @@ export function getSkyColor(hour) {
   }
   // Sunrise (5AM to 7AM)
   else if (hour >= 5 && hour < 7) {
-    const baseHue = 30 - ((hour - 5) * 10); // Warm sunrise colors
-    const saturation = 80 - ((hour - 5) * 10);
-    const lightness = 50 + ((hour - 5) * 10);
+    const progress = hour - 5; // 0 to 2
+    // Keep in yellow-orange range (50-30), avoiding green (>60)
+    const baseHue = 50 - (progress * 10); 
+    const saturation = 85 - (progress * 5);
+    const lightness = 60 + (progress * 10);
     
     if (useGradient) {
       return {
         type: 'gradient',
         colors: [
-          `hsl(${baseHue - 10}, ${saturation}%, ${lightness - 5}%)`, // Slightly darker, warmer
-          `hsl(${baseHue + 10}, ${saturation - 10}%, ${lightness + 10}%)` // Slightly lighter, cooler
+          `hsl(${baseHue - 5}, ${saturation + 5}%, ${lightness - 5}%)`, // Slightly darker, warmer
+          `hsl(${baseHue + 10}, ${saturation - 5}%, ${lightness + 10}%)` // Yellower but staying below 60
         ],
         direction: gradientDirection
       };
@@ -63,9 +65,11 @@ export function getSkyColor(hour) {
   }
   // Morning to midday (7AM to 12PM)
   else if (hour >= 7 && hour < 12) {
-    const baseHue = 210; // Morning blue
-    const saturation = 70 - (hour-7)*5;
-    const lightness = 70 + (hour-7)*2;
+    const progress = hour - 7; // 0 to 5
+    // Transition from light blue to azure blue (200-220)
+    const baseHue = 220 - (progress * 4); 
+    const saturation = 70 - (progress * 5);
+    const lightness = 70 + (progress * 2);
     
     if (useGradient) {
       return {
@@ -85,9 +89,11 @@ export function getSkyColor(hour) {
   }
   // Midday to afternoon (12PM to 5PM)
   else if (hour >= 12 && hour < 17) {
-    const baseHue = 210; // Midday blue
-    const saturation = 55 - (hour-12)*5;
-    const lightness = 80 - (hour-12)*2;
+    const progress = hour - 12; // 0 to 5
+    // Midday to afternoon - stay in blue range (200-225)
+    const baseHue = 200 + (progress * 5); 
+    const saturation = 55 - (progress * 3);
+    const lightness = 80 - (progress * 3);
     
     if (useGradient) {
       return {
@@ -107,16 +113,19 @@ export function getSkyColor(hour) {
   }
   // Sunset (5PM to 8PM)
   else if (hour >= 17 && hour < 20) {
-    const baseHue = 25 + ((hour - 17) * 5); // Orange/red sunset colors
-    const saturation = 80 - ((hour - 17) * 10);
-    const lightness = 60 - ((hour - 17) * 15);
+    const progress = hour - 17; // 0 to 3
+    const baseHue = progress < 1.5 ? 
+                    20 - (progress * 10) : // Start with orange-red (20) toward red (5)
+                    355 - ((progress - 1.5) * 20); // Then toward pink/purple (355-325)
+    const saturation = 85 - (progress * 8);
+    const lightness = 55 - (progress * 10);
     
     if (useGradient) {
       return {
         type: 'gradient',
         colors: [
           `hsl(${baseHue - 10}, ${saturation + 10}%, ${lightness - 5}%)`, // Darker, more saturated
-          `hsl(${baseHue + 10}, ${saturation - 10}%, ${lightness + 10}%)` // Lighter, less saturated
+          `hsl(${baseHue + 15}, ${saturation - 5}%, ${lightness + 10}%)` // Add pink/purple tint, lighter
         ],
         direction: gradientDirection
       };
