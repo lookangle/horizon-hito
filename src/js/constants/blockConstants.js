@@ -17,5 +17,5 @@ export const HEIGHT_UPDATE_INTERVAL = 500; // Update heights every 500ms
 /**
  * Constants for block blur effects
  */
-export const BLUR_BASE =  5; // Base blur in pixels
-export const BLUR_VARIATION = 2; // Variation amount for different blocks 
+export const BLUR_BASE =  0.5; // Base blur in pixels
+export const BLUR_VARIATION = 1; // Variation amount for different blocks 

@@ -51,14 +51,14 @@ export class UIController {
    * Update time display
    */
   updateTimeDisplay() {
-    this.timeDisplay.textContent = 'Time: ' + formatTime(this.currentHour, this.currentMinute);
+    this.timeDisplay.textContent = 'time: ' + formatTime(this.currentHour, this.currentMinute);
   }
   
   /**
    * Update block counter
    */
   updateBlockCounter(count) {
-    this.blockCounter.textContent = `Blocks: ${count}`;
+    this.blockCounter.textContent = `blocks: ${count}`;
   }
   
   /**
