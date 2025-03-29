@@ -36,7 +36,7 @@ export function updateBlockHeights(blocks) {
   let totalNeededHeight = 0;
   for (let i = 1; i < blocks.length; i++) {
     totalNeededHeight += blocks[i].height * blocks[i].heightFactor;
-  }hhhh
+  }
   
   // Ensure we have a reasonable scale factor to prevent blocks from becoming too small
   // Set a minimum scale factor to ensure blocks remain visible
