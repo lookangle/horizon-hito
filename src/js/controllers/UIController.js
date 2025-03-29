@@ -12,12 +12,14 @@ export class UIController {
     this.resetButton = elements.resetButton;
     this.toggleInterface = elements.toggleInterface;
     this.interfaceElement = elements.interfaceElement;
+    this.keyIndicator = document.getElementById('key-indicator');
     
     // State
     this.currentHour = INITIAL_HOUR;
     this.currentMinute = INITIAL_MINUTE;
     this.isPaused = false;
     this.showInterface = true;
+    this.keyIndicatorTimeout = null;
     
     // Callbacks
     this.onReset = onReset;
@@ -35,6 +37,41 @@ export class UIController {
     this.resetButton.addEventListener('click', () => this.handleReset());
     this.toggleInterface.addEventListener('click', () => this.handleToggleInterface());
     this.pauseButton.addEventListener('click', () => this.handleTogglePause());
+    
+    // Add keyboard event listener for 'H' key
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 'h') {
+        this.handleToggleInterface();
+        this.showKeyIndicator();
+      }
+    });
+  }
+  
+  /**
+   * Show the key indicator briefly then fade
+   */
+  showKeyIndicator() {
+    // Clear any existing timeout
+    if (this.keyIndicatorTimeout) {
+      clearTimeout(this.keyIndicatorTimeout);
+    }
+    
+    // Update key indicator text based on current state
+    this.keyIndicator.textContent = this.showInterface ? 'UI Hidden (Press H to show)' : 'UI Shown (Press H to hide)';
+    
+    // Show the indicator
+    this.keyIndicator.classList.add('visible');
+    this.keyIndicator.classList.remove('fade');
+    
+    // Set timeout to fade it after 2 seconds
+    this.keyIndicatorTimeout = setTimeout(() => {
+      this.keyIndicator.classList.add('fade');
+      
+      // Remove the visible class after fade completes
+      setTimeout(() => {
+        this.keyIndicator.classList.remove('visible');
+      }, 300);
+    }, 2000);
   }
   
   /**
@@ -72,12 +109,12 @@ export class UIController {
   handleToggleInterface() {
     this.showInterface = !this.showInterface;
     if (this.showInterface) {
-      this.interfaceElement.style.display = 'block';
-      this.toggleInterface.textContent = 'Hide UI';
+      this.interfaceElement.classList.remove('hidden');
     } else {
-      this.interfaceElement.style.display = 'none';
-      this.toggleInterface.textContent = 'Show UI';
+      this.interfaceElement.classList.add('hidden');
     }
+    
+    // No need to update the toggle button text, as it's now hidden
   }
   
   /**
