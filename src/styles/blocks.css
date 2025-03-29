@@ -3,6 +3,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* Prevent any overflow issues */
 }
 
 .block-wrapper {
@@ -10,43 +11,51 @@
   transition: height 1.5s ease-out, filter 1.5s ease-out; /* Add filter transition */
   position: relative;
   min-height: 0.05vh; /* Allow extremely small heights */
-  transform: scaleY(1.05); /* Increased scale up to prevent gaps */
+  transform: scaleY(1.15); /* Increased scale factor to prevent gaps */
   transform-origin: top; /* Scale from the top */
-  margin-top: -2px; /* Increased overlap with the block above */
+  margin-top: -3px; /* Increased overlap with the block above */
   z-index: 1; /* Establish stacking context */
+  will-change: transform, height; /* Optimize for GPU acceleration */
+  backface-visibility: hidden; /* Prevent flickering */
 }
 
 .block {
-  width: 100%;
-  height: 100%;
+  width: 106%;
+  height: 106%;
   min-height: 1px;
+  margin-left: -3px; /* Ensure horizontal coverage */
   /* Add subtle blur effect */
   filter: blur(0.5px);
   transition: filter 1.5s ease-out;
+  will-change: filter; /* Optimize for GPU acceleration */
 }
 
 .split-block {
   display: flex;
   flex-direction: row;
-  height: 100%;
+  width: 106%;
+  height: 105%;
+  margin-left: -3px; /* Ensure horizontal coverage */
   /* Add subtle blur effect */
   filter: blur(0.5px);
   transition: filter 1.5s ease-out;
   overflow: hidden; /* Ensure motion doesn't create horizontal scrollbars */
+  will-change: filter; /* Optimize for GPU acceleration */
 }
 
 .split-left, .split-right {
-  height: 100%;
+  height: 105%; /* Slight vertical overlap */
   transition: width 3s ease-in-out; /* Smooth transition between width changes */
+  transform: translateZ(0); /* Force GPU acceleration */
 }
 
 /* Enhanced animation for continuous motion - much more subtle */
 @keyframes block-breathe {
-  0% { transform: scaleY(1.05); }
-  25% { transform: scaleY(1.055); }
-  50% { transform: scaleY(1.05); }
-  75% { transform: scaleY(1.045); }
-  100% { transform: scaleY(1.05); }
+  0% { transform: scaleY(1.15); }
+  25% { transform: scaleY(1.155); }
+  50% { transform: scaleY(1.15); }
+  75% { transform: scaleY(1.145); }
+  100% { transform: scaleY(1.15); }
 }
 
 .block-wrapper {

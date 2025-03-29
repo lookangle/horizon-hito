@@ -24,7 +24,7 @@ export class BlockManager {
     // Calculate target height with more dramatic randomness
     // Use a non-linear distribution for more variance
     // Apply slight adjustment to ensure full coverage with scaling
-    const baseHeight = (100 / Math.min(MAX_BLOCKS, 24)) * 0.98; // 0.98 factor to account for 1.05 scaling
+    const baseHeight = (100 / Math.min(MAX_BLOCKS, 24)) * 0.96; // 0.96 factor to account for 1.06 scaling
     let randomHeight;
     
     // Sometimes create very tall or very short blocks for variety
@@ -98,8 +98,9 @@ export class BlockManager {
       const blockElement = document.getElementById(`block-${id}`);
       if (!blockElement) return;
       
-      // Apply the height with a 1.05x scaling factor to eliminate bottom gap
-      blockElement.style.height = `${targetHeight * 1.05}%`;
+      // Apply the height with a 1.06x scaling factor to eliminate bottom gap
+      // Increased from 1.05 to match CSS changes
+      blockElement.style.height = `${targetHeight * 1.06}%`;
       
       // Set z-index to create proper stacking (newer blocks on top)
       blockElement.style.zIndex = zIndex;

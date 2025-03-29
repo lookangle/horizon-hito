@@ -19,13 +19,8 @@ import {
  * Determine if a block should be split or full width
  */
 export function getBlockType(hour) {
-  // Increase likelihood of split blocks at transition periods
-  const transitionPeriod = 
-    (hour >= 5 && hour < 7) ||  // Sunrise
-    (hour >= 17 && hour < 20);  // Sunset
-  
-  // Force split blocks during transition periods and random splits other times
-  if (transitionPeriod || Math.random() < 0.3) {
+  // 30% chance of a split block, regardless of time
+  if (Math.random() < 0.3) {
     // Randomly choose a split position
     const splitPositions = [25, 33, 50, 67, 75];
     const randomIndex = Math.floor(Math.random() * splitPositions.length);
@@ -58,6 +53,10 @@ export function createBlockElement(block) {
   // Set random animation delay for continuous motion effect
   const randomDelay = getRandomRange(ANIMATION_DELAY_MIN, ANIMATION_DELAY_MAX);
   wrapper.style.setProperty('--delay', `${randomDelay}s`);
+  
+  // Ensure position is set to handle stacking properly
+  wrapper.style.position = 'relative';
+  wrapper.style.marginBottom = '-1px'; // Add negative margin to eliminate gaps
   
   if (block.type.type === 'full') {
     // Full-width block

@@ -5,7 +5,7 @@ export const MIN_HEIGHT_FACTOR = 0.1;
 export const MAX_HEIGHT_FACTOR = 2.2;
 export const ANIMATION_DELAY_MIN = 0;
 export const ANIMATION_DELAY_MAX = 10; // Increased delay range for more varied motion
-export const GRADIENT_CHANCE = 0.5; // 25% chance of any block being gradient
+export const GRADIENT_CHANCE = 0.5; // 50% chance of any block being gradient
 export const VERTICAL_GRADIENT_CHANCE = 0.5; // 50% chance of gradient being vertical (vs horizontal)
 
 /**
