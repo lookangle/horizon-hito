@@ -4,7 +4,7 @@
   left: 10px;
   padding: 5px;
   border-radius: 6px;
-  font-size: 15px;
+  font-size: 12px;
   color: white;
   z-index: 10000; /* Already high, ensure it's above the blur overlay */
   font-family: 'JetBrains Mono', 'SF Mono', 'Roboto Mono', 'Courier New', monospace;
@@ -18,7 +18,7 @@
 }
 
 button {
-  padding: 6px 10px;
+  padding: 3px 5px;
   font-size: 10px;
   color: white;
   background-color: transparent;
