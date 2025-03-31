@@ -6,7 +6,7 @@
   border-radius: 6px;
   font-size: 15px;
   color: black;
-  z-index: 10000;
+  z-index: 10000; /* Already high, ensure it's above the blur overlay */
   font-family: 'JetBrains Mono', 'SF Mono', 'Roboto Mono', 'Courier New', monospace;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }

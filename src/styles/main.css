@@ -25,9 +25,23 @@ body {
   overflow: hidden;
 }
 
+/* Add full-screen blur overlay */
+.blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px); /* Safari support */
+  z-index: 5; /* Above blocks but below interface */
+  pointer-events: none; /* Let mouse events pass through */
+  opacity: 0.7; /* Adjust for subtlety */
+}
+
 /* Loading font */
 @font-face {
   font-family: 'JetBrains Mono';
   src: url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
   font-display: swap;
-} 
+}
