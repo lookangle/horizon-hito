@@ -44,3 +44,48 @@ button {
   transform: translateY(-10px);
   pointer-events: none;
 }
+
+/* Blur control styles */
+.blur-control {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+}
+
+.blur-control label {
+  white-space: nowrap;
+}
+
+.blur-control input[type="range"] {
+  width: 80px;
+  background-color: rgba(255, 255, 255, 0.2);
+  height: 4px;
+  border-radius: 2px;
+  -webkit-appearance: none;
+  appearance: none; /* Standard property for compatibility */
+}
+
+.blur-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none; /* Standard property for compatibility */
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  cursor: pointer;
+}
+
+.blur-control input[type="range"]::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.blur-value {
+  min-width: 25px;
+}

@@ -34,9 +34,10 @@ body {
   height: 100vh;
   backdrop-filter: blur(50px);
   -webkit-backdrop-filter: blur(50px); /* Safari support */
-  z-index: 5; /* Above blocks but below interface */
+  z-index: 50; /* Above blocks but below interface */
   pointer-events: none; /* Let mouse events pass through */
   opacity: 1; /* Adjust for subtlety */
+  transition: backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease; /* Smooth transition for blur changes */
 }
 
 /* Loading font */
