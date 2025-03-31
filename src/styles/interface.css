@@ -5,7 +5,7 @@
   padding: 5px;
   border-radius: 6px;
   font-size: 15px;
-  color: black;
+  color: white;
   z-index: 10000; /* Already high, ensure it's above the blur overlay */
   font-family: 'JetBrains Mono', 'SF Mono', 'Roboto Mono', 'Courier New', monospace;
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -20,9 +20,9 @@
 button {
   padding: 6px 10px;
   font-size: 10px;
-  color: black;
+  color: white;
   background-color: transparent;
-  border: 1px solid black;
+  border: 1px solid white;
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;

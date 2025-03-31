@@ -143,21 +143,23 @@ export function getSkyColor(hour) {
   }
   // Night (8PM to midnight)
   else {
-    // Choose one of several aurora colors
-    const auroraColors = [
+    // Choose one of several night colors focused on deep blues, purples, pinks and reds
+    const nightColors = [
       { hue: 240, sat: 40 + saturationBoost, light: 15 }, // Deep blue
-      { hue: 270, sat: 50 + saturationBoost, light: 20 }, // Purple
-      { hue: 160, sat: 60 + saturationBoost, light: 18 }, // Green
-      { hue: 190, sat: 55 + saturationBoost, light: 16 }  // Teal
+      { hue: 260, sat: 50 + saturationBoost, light: 20 }, // Purple/Indigo
+      { hue: 280, sat: 55 + saturationBoost, light: 18 }, // Purple/Violet
+      { hue: 300, sat: 45 + saturationBoost, light: 16 }, // Magenta
+      { hue: 325, sat: 50 + saturationBoost, light: 18 }, // Pink
+      { hue: 350, sat: 55 + saturationBoost, light: 17 }  // Red
     ];
     
-    const colorIndex = Math.floor(Math.random() * auroraColors.length);
-    const baseColor = auroraColors[colorIndex];
+    const colorIndex = Math.floor(Math.random() * nightColors.length);
+    const baseColor = nightColors[colorIndex];
     
     if (useGradient) {
-      // For gradients, mix two aurora colors
-      const secondIndex = (colorIndex + 1 + Math.floor(Math.random() * 2)) % auroraColors.length;
-      const secondColor = auroraColors[secondIndex];
+      // For gradients, mix two night colors
+      const secondIndex = (colorIndex + 1 + Math.floor(Math.random() * 2)) % nightColors.length;
+      const secondColor = nightColors[secondIndex];
       
       return {
         type: 'gradient',
@@ -174,4 +176,4 @@ export function getSkyColor(hour) {
       };
     }
   }
-} 
+}
