@@ -41,33 +41,36 @@ button {
 /* Hidden state for the interface */
 .interface.hidden {
   opacity: 0;
-  transform: translateY(-10px);
   pointer-events: none;
 }
 
-/* Blur control styles */
-.blur-control {
+/* Common slider control styles */
+.slider-control {
   margin-top: 10px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 2px;
   font-size: 10px;
+  width: 100%;
 }
 
-.blur-control label {
+.slider-control label {
   white-space: nowrap;
+  min-width: 100px;
+  display: inline-block;
 }
 
-.blur-control input[type="range"] {
-  width: 80px;
+.slider-control input[type="range"] {
+  width: 120px;
   background-color: rgba(255, 255, 255, 0.2);
   height: 4px;
   border-radius: 2px;
   -webkit-appearance: none;
   appearance: none; /* Standard property for compatibility */
+  flex: 1;
 }
 
-.blur-control input[type="range"]::-webkit-slider-thumb {
+.slider-control input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none; /* Standard property for compatibility */
   width: 10px;
@@ -77,7 +80,7 @@ button {
   cursor: pointer;
 }
 
-.blur-control input[type="range"]::-moz-range-thumb {
+.slider-control input[type="range"]::-moz-range-thumb {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -86,51 +89,45 @@ button {
   border: none;
 }
 
-.blur-value {
-  min-width: 25px;
+.slider-value {
+  min-width: 40px;
+  text-align: right;
 }
 
-/* Saturation control styles */
-.saturation-control {
+/* Apply slider-control styles to specific control types */
+.blur-control, .saturation-control, .motion-control {
   margin-top: 10px;
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 10px;
+  width: 100%;
 }
 
-.saturation-control label {
+.blur-control label, .saturation-control label, .motion-control label {
   white-space: nowrap;
+  min-width: 100px;
+  display: inline-block;
 }
 
-.saturation-control input[type="range"] {
-  width: 80px;
+.blur-control input[type="range"], .saturation-control input[type="range"], .motion-control input[type="range"] {
+  width: 120px;
   background-color: rgba(255, 255, 255, 0.2);
   height: 4px;
   border-radius: 2px;
   -webkit-appearance: none;
   appearance: none;
+  flex: 1;
 }
 
-.saturation-control input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: white;
-  cursor: pointer;
+.blur-value, .saturation-value, .motion-value {
+  min-width: 40px;
+  text-align: right;
 }
 
-.saturation-control input[type="range"]::-moz-range-thumb {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: white;
-  cursor: pointer;
-  border: none;
-}
-
-.saturation-value {
-  min-width: 30px;
+/* Control container for grouped sliders */
+.slider-controls-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }

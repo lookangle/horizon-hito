@@ -21,6 +21,14 @@ export const BLUR_BASE = 0.1; // Base blur in pixels
 export const BLUR_VARIATION = 0.5; // Variation amount for different blocks
 
 /**
+ * Constants for block breathing animation control (default values)
+ */
+export const BREATHING_INTENSITY_BASE = 2.5; // Base percentage for breathing intensity
+export const BREATHING_INTENSITY_VARIATION = 5; // Maximum additional percentage
+export const BREATHING_SPEED_BASE = 5000; // Base speed in milliseconds
+export const BREATHING_SPEED_VARIATION = 7500; // Maximum additional milliseconds
+
+/**
  * Constants for split block horizontal motion
  */
 export const SPLIT_MOTION_ENABLED = true; // Toggle for horizontal motion
@@ -29,4 +37,4 @@ export const SPLIT_MOTION_DURATION_MAX = 120; // Maximum animation duration in s
 export const SPLIT_MOTION_MIN_POSITION = 10; // Minimum split position (%)
 export const SPLIT_MOTION_MAX_POSITION = 90; // Maximum split position (%)
 export const SPLIT_MOTION_UPDATE_MIN = 5000; // Minimum time between updates (ms)
-export const SPLIT_MOTION_UPDATE_MAX = 12000; // Maximum time between updates (ms) 
+export const SPLIT_MOTION_UPDATE_MAX = 12000; // Maximum time between updates (ms)

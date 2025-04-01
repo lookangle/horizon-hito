@@ -18,6 +18,12 @@ export class HorizonTimelapse {
     this.toggleInterface = document.getElementById('toggle-interface');
     this.interfaceElement = document.getElementById('interface');
     
+    // Animation settings
+    this.animationSettings = {
+      intensityFactor: 1,
+      speedFactor: 1
+    };
+    
     // Initialize UI controller and block manager
     this.initComponents();
     
@@ -44,7 +50,8 @@ export class HorizonTimelapse {
         interfaceElement: this.interfaceElement
       },
       () => this.handleReset(),
-      (isPaused) => this.handlePauseToggle(isPaused)
+      (isPaused) => this.handlePauseToggle(isPaused),
+      (settings) => this.handleAnimationSettingsChange(settings)
     );
     
     // Create block manager with UI callback
@@ -85,11 +92,22 @@ export class HorizonTimelapse {
       
       // Calculate updated heights for all blocks
       const blocks = this.blockManager.getBlocks();
-      const blockHeights = updateBlockHeights(blocks);
+      const blockHeights = updateBlockHeights(
+        blocks, 
+        this.animationSettings.intensityFactor, 
+        this.animationSettings.speedFactor
+      );
       
       // Apply the height updates to DOM elements
       this.blockManager.applyHeightUpdates(blockHeights);
     }, HEIGHT_UPDATE_INTERVAL);
+  }
+  
+  /**
+   * Handle animation settings change from UI
+   */
+  handleAnimationSettingsChange(settings) {
+    this.animationSettings = settings;
   }
   
   /**
@@ -117,4 +135,4 @@ export class HorizonTimelapse {
     
     // Clear event listeners (handled by UIController)
   }
-} 
+}

@@ -5,7 +5,7 @@ import { INITIAL_HOUR, INITIAL_MINUTE } from '../constants/timeConstants.js';
  * UI Controller - Handles UI interactions and updates
  */
 export class UIController {
-  constructor(elements, onReset, onTogglePause) {
+  constructor(elements, onReset, onTogglePause, onAnimationSettingsChange) {
     this.timeDisplay = elements.timeDisplay;
     this.blockCounter = elements.blockCounter;
     this.pauseButton = elements.pauseButton;
@@ -18,12 +18,20 @@ export class UIController {
     this.blurValue = null;
     this.saturationSlider = null;
     this.saturationValue = null;
+    this.motionIntensitySlider = null;
+    this.motionIntensityValue = null;
+    this.motionSpeedSlider = null;
+    this.motionSpeedValue = null;
     
     // Default blur value (50px)
     this.currentBlur = 10;
     
     // Default saturation value (100%)
     this.currentSaturation = 100;
+    
+    // Default animation values
+    this.currentMotionIntensity = 100; // 100% = default intensity
+    this.currentMotionSpeed = 100; // 100% = default speed
     
     // State
     this.currentHour = INITIAL_HOUR;
@@ -35,21 +43,39 @@ export class UIController {
     // Callbacks
     this.onReset = onReset;
     this.onTogglePause = onTogglePause;
+    this.onAnimationSettingsChange = onAnimationSettingsChange;
     
     // Initialize
-    this.createBlurControl();
-    this.createSaturationControl();
+    this.createSliderControls();
     this.setupEventListeners();
     this.updateTimeDisplay();
   }
   
   /**
+   * Create all slider controls
+   */
+  createSliderControls() {
+    // Create a container for all slider controls
+    const sliderContainer = document.createElement('div');
+    sliderContainer.className = 'slider-controls-container';
+    
+    // Create each control
+    this.createBlurControl(sliderContainer);
+    this.createSaturationControl(sliderContainer);
+    this.createMotionIntensityControl(sliderContainer);
+    this.createMotionSpeedControl(sliderContainer);
+    
+    // Append container to interface
+    this.interfaceElement.appendChild(sliderContainer);
+  }
+  
+  /**
    * Create the blur control elements
    */
-  createBlurControl() {
+  createBlurControl(container) {
     // Create the container
     const blurControl = document.createElement('div');
-    blurControl.className = 'blur-control';
+    blurControl.className = 'blur-control slider-control';
     
     // Create label
     const label = document.createElement('label');
@@ -64,7 +90,7 @@ export class UIController {
     
     // Create value display
     this.blurValue = document.createElement('span');
-    this.blurValue.className = 'blur-value';
+    this.blurValue.className = 'blur-value slider-value';
     this.blurValue.textContent = this.currentBlur + 'px';
     
     // Append elements
@@ -72,17 +98,17 @@ export class UIController {
     blurControl.appendChild(this.blurSlider);
     blurControl.appendChild(this.blurValue);
     
-    // Append to interface
-    this.interfaceElement.appendChild(blurControl);
+    // Append to container
+    container.appendChild(blurControl);
   }
   
   /**
    * Create the saturation control elements
    */
-  createSaturationControl() {
+  createSaturationControl(container) {
     // Create the container
     const saturationControl = document.createElement('div');
-    saturationControl.className = 'saturation-control';
+    saturationControl.className = 'saturation-control slider-control';
     
     // Create label
     const label = document.createElement('label');
@@ -97,7 +123,7 @@ export class UIController {
     
     // Create value display
     this.saturationValue = document.createElement('span');
-    this.saturationValue.className = 'saturation-value';
+    this.saturationValue.className = 'saturation-value slider-value';
     this.saturationValue.textContent = this.currentSaturation + '%';
     
     // Append elements
@@ -105,11 +131,77 @@ export class UIController {
     saturationControl.appendChild(this.saturationSlider);
     saturationControl.appendChild(this.saturationValue);
     
-    // Append to interface
-    this.interfaceElement.appendChild(saturationControl);
+    // Append to container
+    container.appendChild(saturationControl);
     
     // Apply initial saturation
     this.handleSaturationChange(this.currentSaturation);
+  }
+  
+  /**
+   * Create the motion intensity control elements
+   */
+  createMotionIntensityControl(container) {
+    // Create the container
+    const intensityControl = document.createElement('div');
+    intensityControl.className = 'motion-control slider-control';
+    
+    // Create label
+    const label = document.createElement('label');
+    label.textContent = 'motion intensity:';
+    
+    // Create slider
+    this.motionIntensitySlider = document.createElement('input');
+    this.motionIntensitySlider.type = 'range';
+    this.motionIntensitySlider.min = '0';
+    this.motionIntensitySlider.max = '300';
+    this.motionIntensitySlider.value = this.currentMotionIntensity;
+    
+    // Create value display
+    this.motionIntensityValue = document.createElement('span');
+    this.motionIntensityValue.className = 'motion-value slider-value';
+    this.motionIntensityValue.textContent = this.currentMotionIntensity + '%';
+    
+    // Append elements
+    intensityControl.appendChild(label);
+    intensityControl.appendChild(this.motionIntensitySlider);
+    intensityControl.appendChild(this.motionIntensityValue);
+    
+    // Append to container
+    container.appendChild(intensityControl);
+  }
+  
+  /**
+   * Create the motion speed control elements
+   */
+  createMotionSpeedControl(container) {
+    // Create the container
+    const speedControl = document.createElement('div');
+    speedControl.className = 'motion-control slider-control';
+    
+    // Create label
+    const label = document.createElement('label');
+    label.textContent = 'motion speed:';
+    
+    // Create slider
+    this.motionSpeedSlider = document.createElement('input');
+    this.motionSpeedSlider.type = 'range';
+    this.motionSpeedSlider.min = '20';
+    this.motionSpeedSlider.max = '300';
+    this.motionSpeedSlider.value = this.currentMotionSpeed;
+    
+    // Create value display
+    this.motionSpeedValue = document.createElement('span');
+    this.motionSpeedValue.className = 'motion-value slider-value';
+    this.motionSpeedValue.textContent = this.currentMotionSpeed + '%';
+    
+    // Append elements
+    speedControl.appendChild(label);
+    speedControl.appendChild(this.motionSpeedSlider);
+    speedControl.appendChild(this.motionSpeedValue);
+    
+    // Append to container
+    container.appendChild(speedControl);
   }
   
   /**
@@ -132,6 +224,12 @@ export class UIController {
     
     // Add saturation slider event listener
     this.saturationSlider.addEventListener('input', (e) => this.handleSaturationChange(e.target.value));
+    
+    // Add motion intensity slider event listener
+    this.motionIntensitySlider.addEventListener('input', (e) => this.handleMotionIntensityChange(e.target.value));
+    
+    // Add motion speed slider event listener
+    this.motionSpeedSlider.addEventListener('input', (e) => this.handleMotionSpeedChange(e.target.value));
   }
   
   /**
@@ -157,6 +255,50 @@ export class UIController {
     
     // Apply the saturation to the document body
     document.documentElement.style.setProperty('--global-saturation', `${this.currentSaturation}%`);
+  }
+  
+  /**
+   * Handle motion intensity change
+   */
+  handleMotionIntensityChange(value) {
+    this.currentMotionIntensity = parseInt(value, 10);
+    this.motionIntensityValue.textContent = `${this.currentMotionIntensity}%`;
+    
+    // Notify about animation settings change
+    this.notifyAnimationSettingsChange();
+  }
+  
+  /**
+   * Handle motion speed change
+   */
+  handleMotionSpeedChange(value) {
+    this.currentMotionSpeed = parseInt(value, 10);
+    this.motionSpeedValue.textContent = `${this.currentMotionSpeed}%`;
+    
+    // Notify about animation settings change
+    this.notifyAnimationSettingsChange();
+  }
+  
+  /**
+   * Notify subscribers about animation settings change
+   */
+  notifyAnimationSettingsChange() {
+    if (this.onAnimationSettingsChange) {
+      this.onAnimationSettingsChange({
+        intensityFactor: this.currentMotionIntensity / 100,
+        speedFactor: this.currentMotionSpeed / 100
+      });
+    }
+  }
+  
+  /**
+   * Get current animation settings
+   */
+  getAnimationSettings() {
+    return {
+      intensityFactor: this.currentMotionIntensity / 100,
+      speedFactor: this.currentMotionSpeed / 100
+    };
   }
   
   /**

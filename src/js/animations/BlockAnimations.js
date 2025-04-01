@@ -1,9 +1,18 @@
-import { GROWTH_DURATION, HEIGHT_UPDATE_INTERVAL, BLUR_BASE, BLUR_VARIATION } from '../constants/blockConstants.js';
+import { 
+  GROWTH_DURATION, 
+  HEIGHT_UPDATE_INTERVAL, 
+  BLUR_BASE, 
+  BLUR_VARIATION,
+  BREATHING_INTENSITY_BASE,
+  BREATHING_INTENSITY_VARIATION,
+  BREATHING_SPEED_BASE,
+  BREATHING_SPEED_VARIATION
+} from '../constants/blockConstants.js';
 
 /**
  * Update block heights with growth animation and variation
  */
-export function updateBlockHeights(blocks) {
+export function updateBlockHeights(blocks, intensityFactor = 1, speedFactor = 1) {
   if (blocks.length === 0) return;
   
   const totalHeight = 100; // 100% of available height
@@ -60,10 +69,14 @@ export function updateBlockHeights(blocks) {
       // Add extremely subtle breathing animation to older blocks
       const elapsedTime = Date.now() - block.timestamp;
       
-      // Enhanced breathing animation with more variation and speed
+      // Enhanced breathing animation with more variation and speed, using configurable values
+      // Apply user-controlled intensity and speed factors
+      const baseIntensityPercent = BREATHING_INTENSITY_BASE * intensityFactor;
+      const maxVariation = BREATHING_INTENSITY_VARIATION * intensityFactor;
+      
       // Each block gets a unique breathing cycle based on its ID
-      const uniqueSpeed = 3000 + (block.id % 5) * 500; // Speeds between 3000-5500ms
-      const uniqueIntensity = 0.01 + (block.id % 10) * 0.002; // Intensity between 1-3%
+      const uniqueSpeed = (BREATHING_SPEED_BASE + (block.id % 5) * (BREATHING_SPEED_VARIATION / 5)) / speedFactor;
+      const uniqueIntensity = (baseIntensityPercent / 100) + (block.id % 10) * (maxVariation / 1000);
       
       // Add a slight phase shift for each block to prevent synchronized movement
       const phaseShift = (block.id % 100) * 0.0628; // Random phase (0 to 2π)
@@ -97,4 +110,4 @@ export function updateBackgroundColor(block) {
     const direction = block.color.direction || 'to right';
     return `linear-gradient(${direction}, ${block.color.colors[0]}, ${block.color.colors[1]})`;
   }
-} 
+}
