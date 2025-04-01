@@ -16,9 +16,14 @@ export class UIController {
     this.blurOverlay = document.querySelector('.blur-overlay');
     this.blurSlider = null;
     this.blurValue = null;
+    this.saturationSlider = null;
+    this.saturationValue = null;
     
     // Default blur value (50px)
-    this.currentBlur = 50;
+    this.currentBlur = 10;
+    
+    // Default saturation value (100%)
+    this.currentSaturation = 100;
     
     // State
     this.currentHour = INITIAL_HOUR;
@@ -33,6 +38,7 @@ export class UIController {
     
     // Initialize
     this.createBlurControl();
+    this.createSaturationControl();
     this.setupEventListeners();
     this.updateTimeDisplay();
   }
@@ -71,6 +77,42 @@ export class UIController {
   }
   
   /**
+   * Create the saturation control elements
+   */
+  createSaturationControl() {
+    // Create the container
+    const saturationControl = document.createElement('div');
+    saturationControl.className = 'saturation-control';
+    
+    // Create label
+    const label = document.createElement('label');
+    label.textContent = 'saturation:';
+    
+    // Create slider
+    this.saturationSlider = document.createElement('input');
+    this.saturationSlider.type = 'range';
+    this.saturationSlider.min = '0';
+    this.saturationSlider.max = '200';
+    this.saturationSlider.value = this.currentSaturation;
+    
+    // Create value display
+    this.saturationValue = document.createElement('span');
+    this.saturationValue.className = 'saturation-value';
+    this.saturationValue.textContent = this.currentSaturation + '%';
+    
+    // Append elements
+    saturationControl.appendChild(label);
+    saturationControl.appendChild(this.saturationSlider);
+    saturationControl.appendChild(this.saturationValue);
+    
+    // Append to interface
+    this.interfaceElement.appendChild(saturationControl);
+    
+    // Apply initial saturation
+    this.handleSaturationChange(this.currentSaturation);
+  }
+  
+  /**
    * Set up event listeners
    */
   setupEventListeners() {
@@ -87,6 +129,9 @@ export class UIController {
     
     // Add blur slider event listener
     this.blurSlider.addEventListener('input', (e) => this.handleBlurChange(e.target.value));
+    
+    // Add saturation slider event listener
+    this.saturationSlider.addEventListener('input', (e) => this.handleSaturationChange(e.target.value));
   }
   
   /**
@@ -101,6 +146,17 @@ export class UIController {
       this.blurOverlay.style.backdropFilter = `blur(${this.currentBlur}px)`;
       this.blurOverlay.style.webkitBackdropFilter = `blur(${this.currentBlur}px)`;
     }
+  }
+  
+  /**
+   * Handle saturation change
+   */
+  handleSaturationChange(value) {
+    this.currentSaturation = parseInt(value, 10);
+    this.saturationValue.textContent = `${this.currentSaturation}%`;
+    
+    // Apply the saturation to the document body
+    document.documentElement.style.setProperty('--global-saturation', `${this.currentSaturation}%`);
   }
   
   /**

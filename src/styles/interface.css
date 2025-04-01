@@ -89,3 +89,48 @@ button {
 .blur-value {
   min-width: 25px;
 }
+
+/* Saturation control styles */
+.saturation-control {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+}
+
+.saturation-control label {
+  white-space: nowrap;
+}
+
+.saturation-control input[type="range"] {
+  width: 80px;
+  background-color: rgba(255, 255, 255, 0.2);
+  height: 4px;
+  border-radius: 2px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.saturation-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  cursor: pointer;
+}
+
+.saturation-control input[type="range"]::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.saturation-value {
+  min-width: 30px;
+}
