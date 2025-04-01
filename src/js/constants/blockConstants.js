@@ -25,7 +25,7 @@ export const BLUR_VARIATION = 0.5; // Variation amount for different blocks
  */
 export const BREATHING_INTENSITY_BASE = 2.5; // Base percentage for breathing intensity
 export const BREATHING_INTENSITY_VARIATION = 5; // Maximum additional percentage
-export const BREATHING_SPEED_BASE = 5000; // Base speed in milliseconds
+export const BREATHING_SPEED_BASE = 2500; // Base speed in milliseconds
 export const BREATHING_SPEED_VARIATION = 7500; // Maximum additional milliseconds
 
 /**
